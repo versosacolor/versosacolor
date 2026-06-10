@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Versos a Color 🌈</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lato:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf6ec;
+    --parchment: #f5e6cc;
+    --ink-dark: #2d1f4e;
+    --ink-purple: #5b2d8e;
+    --rose: #e05a7a;
+    --gold: #c9963a;
+    --rainbow-r: #e63946;
+    --rainbow-o: #f4a261;
+    --rainbow-y: #e9c46a;
+    --rainbow-g: #2a9d8f;
+    --rainbow-b: #457b9d;
+    --rainbow-v: #7b2d8b;
+    --text-body: #3a2d1e;
+    --line-color: #dcc8a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: #f0e8d8;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(229,115,167,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(100,149,237,0.10) 0%, transparent 50%);
+    font-family: 'Lato', sans-serif;
+    color: var(--text-body);
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 60px 24px 40px;
+    overflow: hidden;
+  }
+
+  .rainbow-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #e63946, #f4a261, #e9c46a, #2a9d8f, #457b9d, #7b2d8b, #e63946
+    );
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .feather-emoji { font-size: 3rem; animation: float 3s ease-in-out infinite; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50%       { transform: translateY(-10px) rotate(5deg); }
+  }
+
+  .brand-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--rainbow-r), var(--rainbow-o), var(--rainbow-y), var(--rainbow-g), var(--rainbow-b), var(--rainbow-v));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+    color: var(--ink-purple);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .rainbow-divider {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 18px auto 0;
+  }
+  .rainbow-divider span {
+    display: block;
+    width: 30px; height: 4px;
+    border-radius: 4px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(8px);
+    border-top: 2px solid rgba(255,255,255,0.7);
+    border-bottom: 2px solid rgba(255,255,255,0.7);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  nav a {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink-purple);
+    text-decoration: none;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1.5px solid transparent;
+    transition: all 0.25s;
+  }
+  nav a:hover {
+    background: var(--ink-purple);
+    color: white;
+    border-color: var(--ink-purple);
+  }
+
+  /* ── SECTIONS ── */
+  main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  section { margin-bottom: 60px; }
+
+  .section-label {
+    display: inline-block;
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--ink-purple);
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+
+  .section-rule {
+    height: 3px;
+    width: 60px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--rose), var(--rainbow-b));
+    margin-bottom: 28px;
+  }
+
+  /* ── NOTEBOOK CARD ── */
+  .notebook {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 36px 36px 36px 56px;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(45,31,78,0.12), 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid rgba(255,255,255,0.8);
+    overflow: hidden;
+  }
+
+  .notebook::before {
+    content: '';
+    position: absolute;
+    left: 38px; top: 0; bottom: 0;
+    width: 1.5px;
+    background: rgba(200,100,120,0.35);
+  }
+
+  .notebook-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .notebook-rings {
+    position: absolute;
+    left: 14px; top: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px 0;
+    gap: 0;
+  }
+
+  .ring {
+    width: 18px; height: 18px;
+    border: 2.5px solid #b0b8c4;
+    border-radius: 50%;
+    background: #e8ecf0;
+  }
+
+  /* ── POEM ── */
+  .poem {
+    margin-bottom: 32px;
+  }
+
+  .poem-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--rose);
+    margin-bottom: 12px;
+  }
+
+  .poem-icon {
+    font-size: 1.3rem;
+    margin-right: 6px;
+  }
+
+  .poem-stanza {
+    margin-bottom: 14px;
+    padding-left: 0;
+  }
+
+  .poem-line {
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--text-body);
+    line-height: 1.9;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .poem-line .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--rose);
+    margin-top: 12px;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .poem-sign {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1rem;
+    color: var(--ink-purple);
+    opacity: 0.7;
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  .poem-separator {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 24px 0;
+    opacity: 0.5;
+    letter-spacing: 8px;
+  }
+
+  /* ── FEATURED POEM (typewriter effect) ── */
+  .featured-poem {
+    background: linear-gradient(135deg, #fff9f0, #fff0f5);
+    border-radius: 16px;
+    padding: 40px;
+    border-left: 5px solid;
+    border-image: linear-gradient(180deg, var(--rose), var(--rainbow-v)) 1;
+    box-shadow: 0 6px 30px rgba(180,60,120,0.10);
+    position: relative;
+  }
+
+  .featured-poem .big-quote {
+    font-family: 'Dancing Script', cursive;
+    font-size: 6rem;
+    line-height: 0.6;
+    color: var(--rose);
+    opacity: 0.18;
+    position: absolute;
+    top: 24px; left: 20px;
+    pointer-events: none;
+  }
+
+  .featured-poem .poem-body {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 3vw, 1.35rem);
+    line-height: 2;
+    color: var(--ink-dark);
+    position: relative;
+    z-index: 1;
+  }
+
+  .featured-poem .poem-body span {
+    display: block;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: fadeUp 0.5s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* staggered delays */
+  .featured-poem .poem-body span:nth-child(1)  { animation-delay: 0.2s; }
+  .featured-poem .poem-body span:nth-child(2)  { animation-delay: 0.5s; }
+  .featured-poem .poem-body span:nth-child(3)  { animation-delay: 0.8s; }
+  .featured-poem .poem-body span:nth-child(4)  { animation-delay: 1.1s; }
+  .featured-poem .poem-body span:nth-child(5)  { animation-delay: 1.4s; }
+  .featured-poem .poem-body span:nth-child(6)  { animation-delay: 1.7s; }
+  .featured-poem .poem-body span:nth-child(7)  { animation-delay: 2.0s; }
+  .featured-poem .poem-body span:nth-child(8)  { animation-delay: 2.3s; }
+  .featured-poem .poem-body span:nth-child(9)  { animation-delay: 2.6s; }
+  .featured-poem .poem-body span:nth-child(10) { animation-delay: 2.9s; }
+  .featured-poem .poem-body span:nth-child(11) { animation-delay: 3.2s; }
+  .featured-poem .poem-body span:nth-child(12) { animation-delay: 3.5s; }
+  .featured-poem .poem-body span:nth-child(13) { animation-delay: 3.8s; }
+  .featured-poem .poem-body span:nth-child(14) { animation-delay: 4.1s; }
+
+  /* ── ABOUT ── */
+  .about-card {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    background: linear-gradient(135deg, #f4f0ff, #fff0f5);
+    border-radius: 16px;
+    padding: 36px;
+    box-shadow: 0 4px 20px rgba(91,45,142,0.10);
+  }
+
+  .about-icon {
+    font-size: 3.5rem;
+    flex-shrink: 0;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .about-text h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ink-purple);
+    margin-bottom: 10px;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-body);
+    font-weight: 300;
+  }
+
+  /* ── GRID ── */
+  .poem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .poem-card {
+    background: white;
+    border-radius: 14px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: default;
+  }
+
+  .poem-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(91,45,142,0.15);
+  }
+
+  .poem-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+  }
+
+  .poem-card.c-rose::after   { background: linear-gradient(90deg,#e05a7a,#f4a261); }
+  .poem-card.c-blue::after   { background: linear-gradient(90deg,#457b9d,#2a9d8f); }
+  .poem-card.c-purple::after { background: linear-gradient(90deg,#7b2d8b,#457b9d); }
+  .poem-card.c-gold::after   { background: linear-gradient(90deg,#c9963a,#e9c46a); }
+
+  .poem-card-icon { font-size: 1.6rem; margin-bottom: 8px; }
+
+  .poem-card-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink-purple);
+    margin-bottom: 8px;
+  }
+
+  .poem-card-preview {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #6b5a7a;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--ink-dark);
+    color: rgba(255,255,255,0.75);
+  }
+
+  footer .footer-brand {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--rainbow-o), var(--rainbow-r), var(--rainbow-v));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  footer p {
+    font-size: 0.85rem;
+    font-style: italic;
+    opacity: 0.6;
+    margin-top: 6px;
+  }
+
+  .footer-rainbow {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin: 14px 0 6px;
+  }
+
+  .footer-rainbow span {
+    display: block;
+    width: 24px; height: 4px;
+    border-radius: 4px;
+  }
+
+  /* ── GALERÍA IMÁGENES DEL DÍA ── */
+  .galeria-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(180,60,120,0.18);
+    background: #1a0a2e;
+    aspect-ratio: 4/3;
+    max-height: 520px;
+  }
+
+  .galeria-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .galeria-slide.activa { opacity: 1; z-index: 1; }
+  .galeria-slide.saliendo { opacity: 0; z-index: 0; }
+
+  .galeria-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .galeria-slide .slide-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: rgba(255,255,255,0.5);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2d1f4e, #1a0a2e);
+  }
+
+  .galeria-slide .slide-placeholder .ph-icon { font-size: 4rem; opacity: 0.4; }
+  .galeria-slide .slide-placeholder p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    opacity: 0.5;
+  }
+
+  /* overlay degradado inferior */
+  .galeria-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 110px;
+    background: linear-gradient(transparent, rgba(20,8,40,0.75));
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* contador y fecha */
+  .galeria-info {
+    position: absolute;
+    bottom: 14px; left: 0; right: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+  }
+
+  .galeria-fecha {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.75);
+    font-style: italic;
+  }
+
+  .galeria-contador {
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* puntos navegación */
+  .galeria-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .galeria-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #cbb8e0;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    padding: 0;
+  }
+
+  .galeria-dot.activo {
+    background: var(--ink-purple);
+    transform: scale(1.4);
+  }
+
+  /* barra de progreso */
+  .galeria-progreso {
+    height: 3px;
+    background: rgba(91,45,142,0.15);
+    border-radius: 3px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .galeria-progreso-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose), var(--ink-purple));
+    border-radius: 3px;
+    width: 0%;
+    transition: width linear;
+  }
+
+  /* controles prev/next */
+  .galeria-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    z-index: 4;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(6px);
+    border: none;
+    color: white;
+    font-size: 1.3rem;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .galeria-nav:hover { background: rgba(255,255,255,0.35); }
+  .galeria-nav.prev { left: 12px; }
+  .galeria-nav.next { right: 12px; }
+
+  /* etiqueta número de imagen */
+  .galeria-badge {
+    position: absolute;
+    top: 12px; right: 12px;
+    z-index: 4;
+    background: rgba(91,45,142,0.7);
+    color: white;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'Dancing Script', cursive;
+    backdrop-filter: blur(4px);
+  }
+
+  .btn-admin-trigger {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0.25;
+    transition: opacity 0.3s;
+    padding: 6px;
+  }
+  .btn-admin-trigger:hover { opacity: 0.7; }
+
+  /* ── MODAL ADMIN IMÁGENES ── */
+  .img-grid-admin {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 14px 0;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .img-thumb-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f0e8f8;
+  }
+
+  .img-thumb-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .img-thumb-del {
+    position: absolute;
+    top: 3px; right: 3px;
+    background: rgba(220,50,50,0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+
+  .upload-zone {
+    border: 2px dashed #c0a8e0;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #faf5ff;
+    position: relative;
+  }
+
+  .upload-zone:hover { border-color: var(--ink-purple); background: #f3eaff; }
+  .upload-zone input[type=file] {
+    position: absolute; inset: 0;
+    opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+
+  .upload-zone p { font-size: 0.9rem; color: var(--ink-purple); pointer-events: none; }
+  .upload-zone .uz-icon { font-size: 2rem; pointer-events: none; }
+
+  /* ── MODAL LOGIN ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,10,40,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal-box {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 36px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 12px; right: 16px;
+    background: none; border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #999;
+    line-height: 1;
+  }
+
+  .modal-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ink-purple);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .modal-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-purple);
+    margin-bottom: 6px;
+    margin-top: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .modal-input, .modal-textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e0d0f0;
+    border-radius: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    color: var(--text-body);
+    background: white;
+    transition: border-color 0.2s;
+    outline: none;
+    resize: none;
+  }
+
+  .modal-input:focus, .modal-textarea:focus {
+    border-color: var(--ink-purple);
+  }
+
+  .modal-textarea { height: 120px; line-height: 1.6; }
+
+  .modal-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--ink-purple), var(--rose));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .modal-btn:hover { opacity: 0.9; transform: scale(1.02); }
+
+  .modal-error {
+    color: var(--rose);
+    font-size: 0.85rem;
+    margin-top: 8px;
+    text-align: center;
+    display: none;
+  }
+
+  .modal-success {
+    background: linear-gradient(135deg, #e8f8f0, #f0ffe8);
+    border: 1.5px solid #2a9d8f;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    color: #1a6b5a;
+    font-weight: 600;
+    margin-top: 12px;
+    display: none;
+  }
+
+
+  @media (max-width: 600px) {
+    .notebook { padding: 28px 20px 28px 44px; }
+    .about-card { flex-direction: column; gap: 16px; }
+    .featured-poem { padding: 28px 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feather-emoji, .about-icon { animation: none; }
+    .featured-poem .poem-body span { animation: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="rainbow-ring"></div>
+  <div class="logo-badge">
+    <div class="feather-emoji">🪶</div>
+    <div class="brand-name">Versos a Color</div>
+    <p class="tagline">Poemas, rimas románticas y versos de amor<br>dedicados a los sentimientos más puros del alma.</p>
+    <div class="rainbow-divider">
+      <span style="background:#e63946"></span>
+      <span style="background:#f4a261"></span>
+      <span style="background:#e9c46a"></span>
+      <span style="background:#2a9d8f"></span>
+      <span style="background:#457b9d"></span>
+      <span style="background:#7b2d8b"></span>
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="#bienvenida">🌈 Inicio</a>
+  <a href="#poema-destacado">✨ Poema del Día</a>
+  <a href="#coleccion">📖 Colección</a>
+  <a href="#romanticos">💕 Románticos</a>
+  <a href="#frase-del-dia">🌸 Frase del Día</a>
+  <a href="#nosotros">🪶 Nosotros</a>
+</nav>
+
+<main>
+
+  <!-- ══ BIENVENIDA ══ -->
+  <section id="bienvenida">
+    <span class="section-label">✨ Bienvenida</span>
+    <h2 class="section-title">Mi lugar favorito</h2>
+    <div class="section-rule"></div>
+
+    <div class="notebook">
+      <div class="notebook-rings">
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+      </div>
+
+      <div class="poem">
+        <div class="poem-title">☀️ ¡Buenos días!</div>
+
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="dot"></span><span>Que un rayo de sol ilumine tus pensamientos</span></div>
+          <div class="poem-line"><span class="dot"></span><span>y te recuerde todo lo bueno que está por venir.</span></div>
+        </div>
+
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="dot"></span><span>Que el aroma de un café despierte tus sueños,</span></div>
+          <div class="poem-line"><span class="dot"></span><span>tu energía y tus mejores recuerdos. 🍃</span></div>
+        </div>
+
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="dot"></span><span>Que una sonrisa sincera acompañe tu camino</span></div>
+          <div class="poem-line"><span class="dot"></span><span>y haga más ligero tu día.</span></div>
+        </div>
+
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="dot"></span><span>Porque la felicidad vive en los instantes sencillos,</span></div>
+          <div class="poem-line"><span class="dot"></span><span>en los buenos deseos compartidos</span></div>
+          <div class="poem-line"><span class="dot"></span><span>y en la oportunidad de comenzar de nuevo. 🌈</span></div>
+        </div>
+
+        <div class="poem-sign">— Versos a Color 🪶</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ POEMA DESTACADO ══ -->
+  <section id="poema-destacado">
+    <span class="section-label">🌟 Poema del Día</span>
+    <h2 class="section-title">Escrito con alma</h2>
+    <div class="section-rule"></div>
+
+    <div class="featured-poem">
+      <div class="big-quote">"</div>
+      <div class="poem-body">
+        <span>Mi lugar favorito,</span>
+        <span>mi comunicación espacio,</span>
+        <span>mi chica favorita,</span>
+        <span>mi lugar de escritura.</span>
+        <span>&nbsp;</span>
+        <span>Aquí cada verso nace</span>
+        <span>de lo más hondo del corazón,</span>
+        <span>donde el color y la palabra</span>
+        <span>se convierten en canción.</span>
+        <span>&nbsp;</span>
+        <span>Te dedico estas líneas</span>
+        <span>pintadas con arcoíris y amor,</span>
+        <span>porque eres tú mi inspiración,</span>
+        <span>mi musa, mi mejor color.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COLECCIÓN ══ -->
+  <section id="coleccion">
+    <span class="section-label">📖 Colección</span>
+    <h2 class="section-title">Versos para el alma</h2>
+    <div class="section-rule"></div>
+
+    <div class="poem-grid">
+
+      <div class="poem-card c-rose">
+        <div class="poem-card-icon">🌹</div>
+        <div class="poem-card-title">Amor de colores</div>
+        <div class="poem-card-preview">
+          Si el amor tuviera un color<br>
+          sería el del arcoíris después de la lluvia,<br>
+          brillante, frágil y eterno...
+        </div>
+      </div>
+
+      <div class="poem-card c-blue">
+        <div class="poem-card-icon">🌊</div>
+        <div class="poem-card-title">Mar adentro</div>
+        <div class="poem-card-preview">
+          Me perdí en tus ojos<br>
+          como el río en el mar,<br>
+          sin querer volver...
+        </div>
+      </div>
+
+      <div class="poem-card c-purple">
+        <div class="poem-card-icon">🌙</div>
+        <div class="poem-card-title">Noche de versos</div>
+        <div class="poem-card-preview">
+          Escribo de noche<br>
+          porque el silencio me habla<br>
+          con tu voz...
+        </div>
+      </div>
+
+      <div class="poem-card c-gold">
+        <div class="poem-card-icon">🌻</div>
+        <div class="poem-card-title">Mañana de sol</div>
+        <div class="poem-card-preview">
+          El sol se levanta<br>
+          y pienso en ti,<br>
+          como todos los días...
+        </div>
+      </div>
+
+      <div class="poem-card c-rose">
+        <div class="poem-card-icon">🦋</div>
+        <div class="poem-card-title">Mariposa de papel</div>
+        <div class="poem-card-preview">
+          Doblé mis palabras<br>
+          en origami de amor<br>
+          y las dejé volar...
+        </div>
+      </div>
+
+      <div class="poem-card c-purple">
+        <div class="poem-card-icon">🌸</div>
+        <div class="poem-card-title">Primavera en ti</div>
+        <div class="poem-card-preview">
+          Cuando sonríes<br>
+          florece algo en mí<br>
+          que no sabía que existía...
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ ROMÁNTICOS ══ -->
+  <section id="romanticos">
+    <span class="section-label">💕 Románticos</span>
+    <h2 class="section-title">Para ella, para ti</h2>
+    <div class="section-rule"></div>
+
+    <div class="notebook">
+      <div class="notebook-rings">
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        <div class="ring"></div>
+      </div>
+
+      <div class="poem">
+        <div class="poem-title">💌 Carta sin sobre</div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="dot"></span><span>No necesito sobre ni dirección</span></div>
+          <div class="poem-line"><span class="dot"></span><span>para hacerte llegar mis palabras,</span></div>
+          <div class="poem-line"><span class="dot"></span><span>porque tú vives en cada verso</span></div>
+          <div class="poem-line"><span class="dot"></span><span>que escribo sin pensarlo.</span></div>
+        </div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="dot"></span><span>Eres la rima que no busqué</span></div>
+          <div class="poem-line"><span class="dot"></span><span>y que me encontró a mí,</span></div>
+          <div class="poem-line"><span class="dot"></span><span>el color que faltaba</span></div>
+          <div class="poem-line"><span class="dot"></span><span>en todos mis poemas.</span></div>
+        </div>
+        <div class="poem-sign">— Con amor, Versos a Color 🌈</div>
+      </div>
+
+      <div class="poem-separator">· · ·</div>
+
+      <div class="poem">
+        <div class="poem-title">🪷 Pequeña grande</div>
+        <div class="poem-stanza">
+          <div class="poem-line"><span class="dot"></span><span>En lo pequeño está todo:</span></div>
+          <div class="poem-line"><span class="dot"></span><span>tu risa que no anuncia,</span></div>
+          <div class="poem-line"><span class="dot"></span><span>tu mirada que promete,</span></div>
+          <div class="poem-line"><span class="dot"></span><span>tu silencio que dice tanto.</span></div>
+        </div>
+        <div class="poem-sign">— Versos a Color ♡</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ IMÁGENES DEL DÍA ══ -->
+  <section id="frase-del-dia">
+    <span class="section-label">🌸 Imágenes del Día</span>
+    <h2 class="section-title">Galería de Versos</h2>
+    <div class="section-rule"></div>
+
+    <!-- Carrusel -->
+    <div class="galeria-wrapper" id="galeriaWrapper">
+      <!-- slides se generan por JS -->
+      <div class="galeria-overlay"></div>
+      <div class="galeria-info">
+        <span class="galeria-fecha" id="galFecha"></span>
+        <span class="galeria-contador" id="galContador"></span>
+      </div>
+      <button class="galeria-nav prev" onclick="cambiarSlide(-1)">‹</button>
+      <button class="galeria-nav next" onclick="cambiarSlide(1)">›</button>
+      <div class="galeria-badge" id="galBadge">🌈 Versos a Color</div>
+    </div>
+
+    <!-- Puntos -->
+    <div class="galeria-dots" id="galeriaDots"></div>
+
+    <!-- Barra progreso -->
+    <div class="galeria-progreso">
+      <div class="galeria-progreso-bar" id="progresoBar"></div>
+    </div>
+
+    <!-- Botón admin discreto -->
+    <p style="text-align:center; margin-top:16px;">
+      <button onclick="mostrarLogin()" class="btn-admin-trigger" title="Admin">✏️</button>
+    </p>
+  </section>
+
+  <!-- ══ NOSOTROS ══ -->
+  <section id="nosotros">
+    <span class="section-label">🪶 Nosotros</span>
+    <h2 class="section-title">¿Qué es Versos a Color?</h2>
+    <div class="section-rule"></div>
+
+    <div class="about-card">
+      <div class="about-icon">🌈</div>
+      <div class="about-text">
+        <h3>Un espacio para el alma</h3>
+        <p>
+          <strong>Versos a Color</strong> es mi lugar favorito y mi conversación favorita.
+          Aquí encontrarás poemas, rimas románticas y versos de amor muy especiales
+          dedicados a esa chica favorita y a los sentimientos más puros del alma.
+        </p>
+        <br>
+        <p>
+          Cada verso nace del corazón, pintado con los colores del arcoíris,
+          porque el amor —como el arte— siempre merece todos los colores del mundo.
+          <em>¡Bienvenidos al arte de las palabras!</em> ✨
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-brand">Versos a Color</div>
+  <div class="footer-rainbow">
+    <span style="background:#e63946"></span>
+    <span style="background:#f4a261"></span>
+    <span style="background:#e9c46a"></span>
+    <span style="background:#2a9d8f"></span>
+    <span style="background:#457b9d"></span>
+    <span style="background:#7b2d8b"></span>
+  </div>
+  <p>🌈 Mi lugar favorito · Mi comunicación espacio · Mi lugar de escritura</p>
+  <p style="margin-top:12px;">Hecho con amor y pluma de colores 🪶</p>
+</footer>
+
+<!-- ══ MODAL LOGIN ══ -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal-box">
+    <button class="modal-close" onclick="cerrarModal('modal-login')">✕</button>
+    <div class="modal-title">🔐 Panel Admin</div>
+    <label class="modal-label">Clave secreta</label>
+    <input class="modal-input" type="password" id="input-clave" placeholder="Escribe tu clave..."
+           onkeydown="if(event.key==='Enter') verificarClave()">
+    <div class="modal-error" id="error-clave">❌ Clave incorrecta. Intenta de nuevo.</div>
+    <button class="modal-btn" onclick="verificarClave()">✨ Entrar</button>
+  </div>
+</div>
+
+<!-- ══ MODAL EDITOR ══ -->
+<div class="modal-overlay" id="modal-editor">
+  <div class="modal-box" style="max-width:520px;">
+    <button class="modal-close" onclick="cerrarModal('modal-editor')">✕</button>
+    <div class="modal-title">🖼️ Gestionar Galería</div>
+
+    <!-- Instrucciones GitHub -->
+    <div style="background:#f4f0ff;border-radius:12px;padding:16px;margin-bottom:16px;">
+      <p style="font-weight:700;color:#5b2d8e;margin-bottom:10px;font-size:0.95rem;">
+        📁 Cómo agregar imágenes nuevas:
+      </p>
+      <ol style="font-size:0.85rem;color:#4a3060;line-height:2;padding-left:18px;">
+        <li>Ve a tu repositorio en <strong>GitHub</strong></li>
+        <li>Entra a la carpeta <strong>imagenes/</strong></li>
+        <li>Clic en <strong>"Add file" → "Upload files"</strong></li>
+        <li>Sube tus fotos (JPG, PNG, WebP)</li>
+        <li>Abre el archivo <strong>imagenes.json</strong></li>
+        <li>Clic en el <strong>lápiz ✏️</strong> para editar</li>
+        <li>Agrega el nombre de tu foto así:<br>
+          <code style="background:#e8e0ff;padding:2px 6px;border-radius:4px;font-size:0.8rem;">
+            ["foto1.jpg", "foto2.jpg", "nueva.jpg"]
+          </code>
+        </li>
+        <li>Clic en <strong>"Commit changes"</strong> ✅</li>
+      </ol>
+    </div>
+
+    <!-- Lista de imágenes actuales -->
+    <label class="modal-label">📋 Imágenes en galería ahora</label>
+    <div id="listaActual" style="max-height:120px;overflow-y:auto;background:#faf5ff;border-radius:10px;padding:10px;margin-bottom:14px;"></div>
+
+    <!-- Tiempo de rotación -->
+    <label class="modal-label">⏱️ Cambiar cada</label>
+    <select class="modal-input" id="selectTiempo" style="cursor:pointer;">
+      <option value="30">30 segundos (prueba)</option>
+      <option value="120" selected>2 minutos</option>
+      <option value="300">5 minutos</option>
+      <option value="600">10 minutos</option>
+      <option value="1800">30 minutos</option>
+    </select>
+
+    <button class="modal-btn" onclick="guardarConfig()">💾 Guardar tiempo de rotación</button>
+
+    <div class="modal-success" id="success-cfg" style="display:none;">
+      ✅ ¡Configuración guardada! 🌈
+    </div>
+
+    <button onclick="recargarGaleria()" style="display:block;width:100%;margin-top:10px;padding:10px;background:none;border:1.5px solid #5b2d8e;color:#5b2d8e;border-radius:10px;cursor:pointer;font-size:0.9rem;font-family:'Dancing Script',cursive;font-weight:700;">
+      🔄 Recargar imágenes desde GitHub
+    </button>
+  </div>
+</div>
+
+<script>
+  // ══ CONFIGURACIÓN ══════════════════════════════════════════
+  const CLAVE_ADMIN  = "versoscolor2024";   // 🔑 Cambia tu clave aquí
+  const STORAGE_CFG  = "vac_config";
+  // ══════════════════════════════════════════════════════════
+
+  let imagenes      = [];   // [{src, nombre}]
+  let indiceActual  = 0;
+  let timer         = null;
+  let segundosTotal = 120;
+
+  // ── 1. Cargar lista de imágenes desde imagenes.json ─────────
+  async function cargarImagenes() {
+    mostrarCargando(true);
+    try {
+      const resp = await fetch("imagenes/imagenes.json?t=" + Date.now());
+      if (!resp.ok) throw new Error("No encontrado");
+      const data = await resp.json();
+      imagenes = data.map(nombre => ({
+        src: "imagenes/" + nombre,
+        nombre: nombre
+      }));
+    } catch(e) {
+      imagenes = [];
+    }
+
+    // config guardada localmente (tiempo de rotación)
+    try {
+      const cfg = localStorage.getItem(STORAGE_CFG);
+      if (cfg) segundosTotal = JSON.parse(cfg).segundos || 120;
+    } catch(e) {}
+
+    mostrarCargando(false);
+    renderGaleria();
+    iniciarTimer();
+  }
+
+  function mostrarCargando(activo) {
+    const wrapper = document.getElementById("galeriaWrapper");
+    let loading = wrapper.querySelector(".galeria-loading");
+    if (activo) {
+      if (!loading) {
+        loading = document.createElement("div");
+        loading.className = "galeria-loading galeria-slide activa";
+        loading.innerHTML = `<div class="slide-placeholder">
+          <div class="ph-icon" style="animation:float 1s ease-in-out infinite">🌈</div>
+          <p>Cargando imágenes...</p>
+        </div>`;
+        wrapper.insertBefore(loading, wrapper.querySelector(".galeria-overlay"));
+      }
+    } else {
+      if (loading) loading.remove();
+    }
+  }
+
+  // ── 2. Renderizar galería ───────────────────────────────────
+  function renderGaleria() {
+    const wrapper = document.getElementById("galeriaWrapper");
+    wrapper.querySelectorAll(".galeria-slide").forEach(s => s.remove());
+
+    if (imagenes.length === 0) {
+      const ph = document.createElement("div");
+      ph.className = "galeria-slide activa";
+      ph.innerHTML = `<div class="slide-placeholder">
+        <div class="ph-icon">🌈</div>
+        <p>Aún no hay imágenes en la carpeta</p>
+        <p style="font-size:0.8rem;opacity:0.4">Sube fotos a la carpeta <strong>imagenes/</strong> en GitHub</p>
+      </div>`;
+      wrapper.insertBefore(ph, wrapper.querySelector(".galeria-overlay"));
+      document.getElementById("galContador").textContent = "";
+    } else {
+      imagenes.forEach((img, i) => {
+        const slide = document.createElement("div");
+        slide.className = "galeria-slide" + (i === indiceActual ? " activa" : "");
+        const im = document.createElement("img");
+        im.src   = img.src;
+        im.alt   = img.nombre;
+        im.onerror = () => slide.remove(); // ocultar si no carga
+        slide.appendChild(im);
+        wrapper.insertBefore(slide, wrapper.querySelector(".galeria-overlay"));
+      });
+      actualizarInfo();
+    }
+    renderDots();
+  }
+
+  function actualizarInfo() {
+    if (!imagenes.length) return;
+    const hoy = new Date().toLocaleDateString("es-DO", {
+      weekday:"long", day:"numeric", month:"long"
+    });
+    document.getElementById("galFecha").textContent =
+      "📅 " + hoy.charAt(0).toUpperCase() + hoy.slice(1);
+    document.getElementById("galContador").textContent =
+      (indiceActual + 1) + " / " + imagenes.length;
+  }
+
+  function renderDots() {
+    const cont = document.getElementById("galeriaDots");
+    cont.innerHTML = "";
+    imagenes.forEach((_, i) => {
+      const d = document.createElement("button");
+      d.className = "galeria-dot" + (i === indiceActual ? " activo" : "");
+      d.onclick = () => irASlide(i);
+      cont.appendChild(d);
+    });
+  }
+
+  // ── 3. Navegación ───────────────────────────────────────────
+  function irASlide(nuevo) {
+    if (!imagenes.length) return;
+    const slides = document.querySelectorAll(".galeria-slide");
+    slides[indiceActual]?.classList.remove("activa");
+    indiceActual = (nuevo + imagenes.length) % imagenes.length;
+    slides[indiceActual]?.classList.add("activa");
+    actualizarInfo();
+    renderDots();
+    reiniciarBarra();
+  }
+
+  function cambiarSlide(dir) { irASlide(indiceActual + dir); }
+
+  // ── 4. Timer ────────────────────────────────────────────────
+  function iniciarTimer() {
+    clearInterval(timer);
+    if (imagenes.length <= 1) return;
+    reiniciarBarra();
+    timer = setInterval(() => irASlide(indiceActual + 1), segundosTotal * 1000);
+  }
+
+  function reiniciarBarra() {
+    const bar = document.getElementById("progresoBar");
+    bar.style.transition = "none";
+    bar.style.width = "0%";
+    setTimeout(() => {
+      bar.style.transition = `width ${segundosTotal}s linear`;
+      bar.style.width = "100%";
+    }, 50);
+  }
+
+  // ── 5. Modal Login ──────────────────────────────────────────
+  function mostrarLogin() {
+    document.getElementById("input-clave").value = "";
+    document.getElementById("error-clave").style.display = "none";
+    document.getElementById("modal-login").classList.add("active");
+    setTimeout(() => document.getElementById("input-clave").focus(), 100);
+  }
+
+  function cerrarModal(id) {
+    document.getElementById(id).classList.remove("active");
+  }
+
+  function verificarClave() {
+    const clave = document.getElementById("input-clave").value.trim();
+    if (clave === CLAVE_ADMIN) {
+      cerrarModal("modal-login");
+      abrirEditor();
+    } else {
+      document.getElementById("error-clave").style.display = "block";
+      document.getElementById("input-clave").value = "";
+      document.getElementById("input-clave").focus();
+    }
+  }
+
+  // ── 6. Panel admin: instrucciones GitHub ────────────────────
+  function abrirEditor() {
+    document.getElementById("selectTiempo").value = String(segundosTotal);
+    document.getElementById("modal-editor").classList.add("active");
+    renderListaActual();
+  }
+
+  function renderListaActual() {
+    const cont = document.getElementById("listaActual");
+    if (!imagenes.length) {
+      cont.innerHTML = `<p style="color:#bbb;font-size:0.85rem;text-align:center;padding:10px 0">
+        No hay imágenes cargadas aún.</p>`;
+      return;
+    }
+    cont.innerHTML = imagenes.map((img, i) =>
+      `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #f0e0f8;">
+        <span style="color:#c0a0d0;font-size:0.8rem;">${i+1}.</span>
+        <span style="font-size:0.85rem;color:#4a3060;flex:1;word-break:break-all;">${img.nombre}</span>
+      </div>`
+    ).join("");
+  }
+
+  function guardarConfig() {
+    segundosTotal = parseInt(document.getElementById("selectTiempo").value) || 120;
+    localStorage.setItem(STORAGE_CFG, JSON.stringify({ segundos: segundosTotal }));
+    clearInterval(timer);
+    iniciarTimer();
+    document.getElementById("success-cfg").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("success-cfg").style.display = "none";
+      cerrarModal("modal-editor");
+    }, 1800);
+  }
+
+  function recargarGaleria() {
+    indiceActual = 0;
+    clearInterval(timer);
+    cargarImagenes();
+    document.getElementById("modal-editor").classList.remove("active");
+  }
+
+  // ── Cerrar modales al hacer clic fuera ──────────────────────
+  document.querySelectorAll(".modal-overlay").forEach(overlay => {
+    overlay.addEventListener("click", function(e) {
+      if (e.target === this) this.classList.remove("active");
+    });
+  });
+
+  // ── INICIO ──────────────────────────────────────────────────
+  cargarImagenes();
+</script>
+
+
+</body>
+</html>
