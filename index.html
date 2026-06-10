@@ -459,46 +459,161 @@
     border-radius: 4px;
   }
 
-  /* ── FRASE DEL DÍA ── */
-  .frase-display {
-    background: linear-gradient(135deg, #fff5fb, #f0f4ff);
-    border-radius: 20px;
-    padding: 40px 36px;
-    text-align: center;
+  /* ── GALERÍA IMÁGENES DEL DÍA ── */
+  .galeria-wrapper {
     position: relative;
-    box-shadow: 0 6px 32px rgba(180,60,120,0.13);
-    border: 1.5px solid rgba(255,255,255,0.9);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(180,60,120,0.18);
+    background: #1a0a2e;
+    aspect-ratio: 4/3;
+    max-height: 520px;
   }
 
-  .frase-quill {
-    font-size: 2.5rem;
-    margin-bottom: 16px;
-    animation: float 3s ease-in-out infinite;
+  .galeria-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .frase-texto {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(1.2rem, 3.5vw, 1.7rem);
-    color: var(--ink-dark);
-    line-height: 1.8;
-    max-width: 600px;
-    margin: 0 auto 16px;
-    min-height: 60px;
+  .galeria-slide.activa { opacity: 1; z-index: 1; }
+  .galeria-slide.saliendo { opacity: 0; z-index: 0; }
+
+  .galeria-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
-  .frase-autor {
+  .galeria-slide .slide-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: rgba(255,255,255,0.5);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2d1f4e, #1a0a2e);
+  }
+
+  .galeria-slide .slide-placeholder .ph-icon { font-size: 4rem; opacity: 0.4; }
+  .galeria-slide .slide-placeholder p {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.1rem;
-    color: var(--ink-purple);
-    font-weight: 600;
+    font-size: 1.3rem;
+    opacity: 0.5;
   }
 
-  .frase-fecha {
+  /* overlay degradado inferior */
+  .galeria-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 110px;
+    background: linear-gradient(transparent, rgba(20,8,40,0.75));
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* contador y fecha */
+  .galeria-info {
+    position: absolute;
+    bottom: 14px; left: 0; right: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+  }
+
+  .galeria-fecha {
     font-size: 0.78rem;
-    color: #aaa;
-    margin-top: 8px;
+    color: rgba(255,255,255,0.75);
     font-style: italic;
+  }
+
+  .galeria-contador {
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* puntos navegación */
+  .galeria-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .galeria-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #cbb8e0;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    padding: 0;
+  }
+
+  .galeria-dot.activo {
+    background: var(--ink-purple);
+    transform: scale(1.4);
+  }
+
+  /* barra de progreso */
+  .galeria-progreso {
+    height: 3px;
+    background: rgba(91,45,142,0.15);
+    border-radius: 3px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .galeria-progreso-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose), var(--ink-purple));
+    border-radius: 3px;
+    width: 0%;
+    transition: width linear;
+  }
+
+  /* controles prev/next */
+  .galeria-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    z-index: 4;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(6px);
+    border: none;
+    color: white;
+    font-size: 1.3rem;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .galeria-nav:hover { background: rgba(255,255,255,0.35); }
+  .galeria-nav.prev { left: 12px; }
+  .galeria-nav.next { right: 12px; }
+
+  /* etiqueta número de imagen */
+  .galeria-badge {
+    position: absolute;
+    top: 12px; right: 12px;
+    z-index: 4;
+    background: rgba(91,45,142,0.7);
+    color: white;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'Dancing Script', cursive;
+    backdrop-filter: blur(4px);
   }
 
   .btn-admin-trigger {
@@ -511,6 +626,63 @@
     padding: 6px;
   }
   .btn-admin-trigger:hover { opacity: 0.7; }
+
+  /* ── MODAL ADMIN IMÁGENES ── */
+  .img-grid-admin {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 14px 0;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .img-thumb-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f0e8f8;
+  }
+
+  .img-thumb-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .img-thumb-del {
+    position: absolute;
+    top: 3px; right: 3px;
+    background: rgba(220,50,50,0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+
+  .upload-zone {
+    border: 2px dashed #c0a8e0;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #faf5ff;
+    position: relative;
+  }
+
+  .upload-zone:hover { border-color: var(--ink-purple); background: #f3eaff; }
+  .upload-zone input[type=file] {
+    position: absolute; inset: 0;
+    opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+
+  .upload-zone p { font-size: 0.9rem; color: var(--ink-purple); pointer-events: none; }
+  .upload-zone .uz-icon { font-size: 2rem; pointer-events: none; }
 
   /* ── MODAL LOGIN ── */
   .modal-overlay {
@@ -859,20 +1031,34 @@
     </div>
   </section>
 
-  <!-- ══ FRASE DEL DÍA ══ -->
+  <!-- ══ IMÁGENES DEL DÍA ══ -->
   <section id="frase-del-dia">
-    <span class="section-label">🌸 Frase del Día</span>
-    <h2 class="section-title">Palabras de hoy</h2>
+    <span class="section-label">🌸 Imágenes del Día</span>
+    <h2 class="section-title">Galería de Versos</h2>
     <div class="section-rule"></div>
 
-    <div class="frase-display">
-      <div class="frase-quill">🪶</div>
-      <div id="frase-texto" class="frase-texto"></div>
-      <div id="frase-autor" class="frase-autor"></div>
-      <div id="frase-fecha" class="frase-fecha"></div>
+    <!-- Carrusel -->
+    <div class="galeria-wrapper" id="galeriaWrapper">
+      <!-- slides se generan por JS -->
+      <div class="galeria-overlay"></div>
+      <div class="galeria-info">
+        <span class="galeria-fecha" id="galFecha"></span>
+        <span class="galeria-contador" id="galContador"></span>
+      </div>
+      <button class="galeria-nav prev" onclick="cambiarSlide(-1)">‹</button>
+      <button class="galeria-nav next" onclick="cambiarSlide(1)">›</button>
+      <div class="galeria-badge" id="galBadge">🌈 Versos a Color</div>
     </div>
 
-    <!-- Botón secreto (triple clic en la pluma del footer activa el panel) -->
+    <!-- Puntos -->
+    <div class="galeria-dots" id="galeriaDots"></div>
+
+    <!-- Barra progreso -->
+    <div class="galeria-progreso">
+      <div class="galeria-progreso-bar" id="progresoBar"></div>
+    </div>
+
+    <!-- Botón admin discreto -->
     <p style="text-align:center; margin-top:16px;">
       <button onclick="mostrarLogin()" class="btn-admin-trigger" title="Admin">✏️</button>
     </p>
@@ -935,56 +1121,198 @@
 
 <!-- ══ MODAL EDITOR ══ -->
 <div class="modal-overlay" id="modal-editor">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:520px;">
     <button class="modal-close" onclick="cerrarModal('modal-editor')">✕</button>
-    <div class="modal-title">🪶 Editar Frase del Día</div>
+    <div class="modal-title">🖼️ Gestionar Galería</div>
 
-    <label class="modal-label">📝 Frase o verso</label>
-    <textarea class="modal-textarea" id="edit-frase"
-      placeholder="Escribe aquí tu frase, verso o poema corto del día..."></textarea>
-
-    <label class="modal-label">✍️ Autor / Firma</label>
-    <input class="modal-input" type="text" id="edit-autor"
-           placeholder="— Versos a Color 🌈">
-
-    <button class="modal-btn" onclick="guardarFrase()">💾 Guardar y publicar</button>
-
-    <div class="modal-success" id="success-msg">
-      ✅ ¡Frase del día publicada con éxito! 🌈
+    <!-- Instrucciones GitHub -->
+    <div style="background:#f4f0ff;border-radius:12px;padding:16px;margin-bottom:16px;">
+      <p style="font-weight:700;color:#5b2d8e;margin-bottom:10px;font-size:0.95rem;">
+        📁 Cómo agregar imágenes nuevas:
+      </p>
+      <ol style="font-size:0.85rem;color:#4a3060;line-height:2;padding-left:18px;">
+        <li>Ve a tu repositorio en <strong>GitHub</strong></li>
+        <li>Entra a la carpeta <strong>imagenes/</strong></li>
+        <li>Clic en <strong>"Add file" → "Upload files"</strong></li>
+        <li>Sube tus fotos (JPG, PNG, WebP)</li>
+        <li>Abre el archivo <strong>imagenes.json</strong></li>
+        <li>Clic en el <strong>lápiz ✏️</strong> para editar</li>
+        <li>Agrega el nombre de tu foto así:<br>
+          <code style="background:#e8e0ff;padding:2px 6px;border-radius:4px;font-size:0.8rem;">
+            ["foto1.jpg", "foto2.jpg", "nueva.jpg"]
+          </code>
+        </li>
+        <li>Clic en <strong>"Commit changes"</strong> ✅</li>
+      </ol>
     </div>
 
-    <p style="font-size:0.78rem;color:#bbb;text-align:center;margin-top:12px;">
-      Los cambios se guardan en este navegador.<br>
-      Para que todos lo vean, usa Netlify o GitHub Pages.
-    </p>
+    <!-- Lista de imágenes actuales -->
+    <label class="modal-label">📋 Imágenes en galería ahora</label>
+    <div id="listaActual" style="max-height:120px;overflow-y:auto;background:#faf5ff;border-radius:10px;padding:10px;margin-bottom:14px;"></div>
+
+    <!-- Tiempo de rotación -->
+    <label class="modal-label">⏱️ Cambiar cada</label>
+    <select class="modal-input" id="selectTiempo" style="cursor:pointer;">
+      <option value="30">30 segundos (prueba)</option>
+      <option value="120" selected>2 minutos</option>
+      <option value="300">5 minutos</option>
+      <option value="600">10 minutos</option>
+      <option value="1800">30 minutos</option>
+    </select>
+
+    <button class="modal-btn" onclick="guardarConfig()">💾 Guardar tiempo de rotación</button>
+
+    <div class="modal-success" id="success-cfg" style="display:none;">
+      ✅ ¡Configuración guardada! 🌈
+    </div>
+
+    <button onclick="recargarGaleria()" style="display:block;width:100%;margin-top:10px;padding:10px;background:none;border:1.5px solid #5b2d8e;color:#5b2d8e;border-radius:10px;cursor:pointer;font-size:0.9rem;font-family:'Dancing Script',cursive;font-weight:700;">
+      🔄 Recargar imágenes desde GitHub
+    </button>
   </div>
 </div>
 
 <script>
-  // ── CLAVE SECRETA (cámbiala aquí) ──────────────────────────────
-  const CLAVE_ADMIN = "aye2022";
-  // ────────────────────────────────────────────────────────────────
+  // ══ CONFIGURACIÓN ══════════════════════════════════════════
+  const CLAVE_ADMIN  = "versoscolor2024";   // 🔑 Cambia tu clave aquí
+  const STORAGE_CFG  = "vac_config";
+  // ══════════════════════════════════════════════════════════
 
-  const FRASE_DEFAULT = {
-    texto: "Que hoy la vida te sorprenda con paz, salud, alegría y muchas bendiciones.",
-    autor: "— Versos a Color 🌈"
-  };
+  let imagenes      = [];   // [{src, nombre}]
+  let indiceActual  = 0;
+  let timer         = null;
+  let segundosTotal = 120;
 
-  // ── Mostrar frase al cargar ──
-  function mostrarFrase() {
-    const guardada = localStorage.getItem("vac_frase");
-    const data = guardada ? JSON.parse(guardada) : FRASE_DEFAULT;
+  // ── 1. Cargar lista de imágenes desde imagenes.json ─────────
+  async function cargarImagenes() {
+    mostrarCargando(true);
+    try {
+      const resp = await fetch("imagenes/imagenes.json?t=" + Date.now());
+      if (!resp.ok) throw new Error("No encontrado");
+      const data = await resp.json();
+      imagenes = data.map(nombre => ({
+        src: "imagenes/" + nombre,
+        nombre: nombre
+      }));
+    } catch(e) {
+      imagenes = [];
+    }
 
-    document.getElementById("frase-texto").textContent = data.texto;
-    document.getElementById("frase-autor").textContent = data.autor || "— Versos a Color 🌈";
+    // config guardada localmente (tiempo de rotación)
+    try {
+      const cfg = localStorage.getItem(STORAGE_CFG);
+      if (cfg) segundosTotal = JSON.parse(cfg).segundos || 120;
+    } catch(e) {}
 
-    const hoy = new Date().toLocaleDateString("es-DO", {
-      weekday: "long", year: "numeric", month: "long", day: "numeric"
-    });
-    document.getElementById("frase-fecha").textContent = "📅 " + hoy.charAt(0).toUpperCase() + hoy.slice(1);
+    mostrarCargando(false);
+    renderGaleria();
+    iniciarTimer();
   }
 
-  // ── Modal helpers ──
+  function mostrarCargando(activo) {
+    const wrapper = document.getElementById("galeriaWrapper");
+    let loading = wrapper.querySelector(".galeria-loading");
+    if (activo) {
+      if (!loading) {
+        loading = document.createElement("div");
+        loading.className = "galeria-loading galeria-slide activa";
+        loading.innerHTML = `<div class="slide-placeholder">
+          <div class="ph-icon" style="animation:float 1s ease-in-out infinite">🌈</div>
+          <p>Cargando imágenes...</p>
+        </div>`;
+        wrapper.insertBefore(loading, wrapper.querySelector(".galeria-overlay"));
+      }
+    } else {
+      if (loading) loading.remove();
+    }
+  }
+
+  // ── 2. Renderizar galería ───────────────────────────────────
+  function renderGaleria() {
+    const wrapper = document.getElementById("galeriaWrapper");
+    wrapper.querySelectorAll(".galeria-slide").forEach(s => s.remove());
+
+    if (imagenes.length === 0) {
+      const ph = document.createElement("div");
+      ph.className = "galeria-slide activa";
+      ph.innerHTML = `<div class="slide-placeholder">
+        <div class="ph-icon">🌈</div>
+        <p>Aún no hay imágenes en la carpeta</p>
+        <p style="font-size:0.8rem;opacity:0.4">Sube fotos a la carpeta <strong>imagenes/</strong> en GitHub</p>
+      </div>`;
+      wrapper.insertBefore(ph, wrapper.querySelector(".galeria-overlay"));
+      document.getElementById("galContador").textContent = "";
+    } else {
+      imagenes.forEach((img, i) => {
+        const slide = document.createElement("div");
+        slide.className = "galeria-slide" + (i === indiceActual ? " activa" : "");
+        const im = document.createElement("img");
+        im.src   = img.src;
+        im.alt   = img.nombre;
+        im.onerror = () => slide.remove(); // ocultar si no carga
+        slide.appendChild(im);
+        wrapper.insertBefore(slide, wrapper.querySelector(".galeria-overlay"));
+      });
+      actualizarInfo();
+    }
+    renderDots();
+  }
+
+  function actualizarInfo() {
+    if (!imagenes.length) return;
+    const hoy = new Date().toLocaleDateString("es-DO", {
+      weekday:"long", day:"numeric", month:"long"
+    });
+    document.getElementById("galFecha").textContent =
+      "📅 " + hoy.charAt(0).toUpperCase() + hoy.slice(1);
+    document.getElementById("galContador").textContent =
+      (indiceActual + 1) + " / " + imagenes.length;
+  }
+
+  function renderDots() {
+    const cont = document.getElementById("galeriaDots");
+    cont.innerHTML = "";
+    imagenes.forEach((_, i) => {
+      const d = document.createElement("button");
+      d.className = "galeria-dot" + (i === indiceActual ? " activo" : "");
+      d.onclick = () => irASlide(i);
+      cont.appendChild(d);
+    });
+  }
+
+  // ── 3. Navegación ───────────────────────────────────────────
+  function irASlide(nuevo) {
+    if (!imagenes.length) return;
+    const slides = document.querySelectorAll(".galeria-slide");
+    slides[indiceActual]?.classList.remove("activa");
+    indiceActual = (nuevo + imagenes.length) % imagenes.length;
+    slides[indiceActual]?.classList.add("activa");
+    actualizarInfo();
+    renderDots();
+    reiniciarBarra();
+  }
+
+  function cambiarSlide(dir) { irASlide(indiceActual + dir); }
+
+  // ── 4. Timer ────────────────────────────────────────────────
+  function iniciarTimer() {
+    clearInterval(timer);
+    if (imagenes.length <= 1) return;
+    reiniciarBarra();
+    timer = setInterval(() => irASlide(indiceActual + 1), segundosTotal * 1000);
+  }
+
+  function reiniciarBarra() {
+    const bar = document.getElementById("progresoBar");
+    bar.style.transition = "none";
+    bar.style.width = "0%";
+    setTimeout(() => {
+      bar.style.transition = `width ${segundosTotal}s linear`;
+      bar.style.width = "100%";
+    }, 50);
+  }
+
+  // ── 5. Modal Login ──────────────────────────────────────────
   function mostrarLogin() {
     document.getElementById("input-clave").value = "";
     document.getElementById("error-clave").style.display = "none";
@@ -996,7 +1324,6 @@
     document.getElementById(id).classList.remove("active");
   }
 
-  // ── Verificar clave ──
   function verificarClave() {
     const clave = document.getElementById("input-clave").value.trim();
     if (clave === CLAVE_ADMIN) {
@@ -1009,46 +1336,58 @@
     }
   }
 
-  // ── Abrir editor con datos actuales ──
+  // ── 6. Panel admin: instrucciones GitHub ────────────────────
   function abrirEditor() {
-    const guardada = localStorage.getItem("vac_frase");
-    const data = guardada ? JSON.parse(guardada) : FRASE_DEFAULT;
-    document.getElementById("edit-frase").value = data.texto;
-    document.getElementById("edit-autor").value = data.autor || "";
-    document.getElementById("success-msg").style.display = "none";
+    document.getElementById("selectTiempo").value = String(segundosTotal);
     document.getElementById("modal-editor").classList.add("active");
-    setTimeout(() => document.getElementById("edit-frase").focus(), 100);
+    renderListaActual();
   }
 
-  // ── Guardar frase ──
-  function guardarFrase() {
-    const texto = document.getElementById("edit-frase").value.trim();
-    const autor = document.getElementById("edit-autor").value.trim() || "— Versos a Color 🌈";
-
-    if (!texto) {
-      alert("Por favor escribe una frase antes de guardar.");
+  function renderListaActual() {
+    const cont = document.getElementById("listaActual");
+    if (!imagenes.length) {
+      cont.innerHTML = `<p style="color:#bbb;font-size:0.85rem;text-align:center;padding:10px 0">
+        No hay imágenes cargadas aún.</p>`;
       return;
     }
-
-    localStorage.setItem("vac_frase", JSON.stringify({ texto, autor }));
-    mostrarFrase();
-
-    document.getElementById("success-msg").style.display = "block";
-    setTimeout(() => {
-      cerrarModal("modal-editor");
-    }, 2000);
+    cont.innerHTML = imagenes.map((img, i) =>
+      `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #f0e0f8;">
+        <span style="color:#c0a0d0;font-size:0.8rem;">${i+1}.</span>
+        <span style="font-size:0.85rem;color:#4a3060;flex:1;word-break:break-all;">${img.nombre}</span>
+      </div>`
+    ).join("");
   }
 
-  // ── Cerrar modales al hacer clic fuera ──
+  function guardarConfig() {
+    segundosTotal = parseInt(document.getElementById("selectTiempo").value) || 120;
+    localStorage.setItem(STORAGE_CFG, JSON.stringify({ segundos: segundosTotal }));
+    clearInterval(timer);
+    iniciarTimer();
+    document.getElementById("success-cfg").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("success-cfg").style.display = "none";
+      cerrarModal("modal-editor");
+    }, 1800);
+  }
+
+  function recargarGaleria() {
+    indiceActual = 0;
+    clearInterval(timer);
+    cargarImagenes();
+    document.getElementById("modal-editor").classList.remove("active");
+  }
+
+  // ── Cerrar modales al hacer clic fuera ──────────────────────
   document.querySelectorAll(".modal-overlay").forEach(overlay => {
     overlay.addEventListener("click", function(e) {
       if (e.target === this) this.classList.remove("active");
     });
   });
 
-  // ── Iniciar ──
-  mostrarFrase();
+  // ── INICIO ──────────────────────────────────────────────────
+  cargarImagenes();
 </script>
+
 
 </body>
 </html>
