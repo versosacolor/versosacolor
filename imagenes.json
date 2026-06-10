@@ -1,4 +1,4 @@
 [
-  "imagenes/frase1.jpeg"
-  "imagenes/logo.jpeg"
+  "../frase1.jpeg",
+  "../logo.jpeg"
 ]
