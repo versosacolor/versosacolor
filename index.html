@@ -891,26 +891,16 @@
   <!-- ══ POEMA DESTACADO ══ -->
   <section id="poema-destacado">
     <span class="section-label">🌟 Poema del Día</span>
-    <h2 class="section-title">Escrito con alma</h2>
+    <h2 class="section-title" id="poema-titulo">Escrito con alma</h2>
     <div class="section-rule"></div>
 
     <div class="featured-poem">
       <div class="big-quote">"</div>
-      <div class="poem-body">
-        <span>Mi lugar favorito,</span>
-        <span>mi comunicación espacio,</span>
-        <span>mi chica favorita,</span>
-        <span>mi lugar de escritura.</span>
-        <span>&nbsp;</span>
-        <span>Aquí cada verso nace</span>
-        <span>de lo más hondo del corazón,</span>
-        <span>donde el color y la palabra</span>
-        <span>se convierten en canción.</span>
-        <span>&nbsp;</span>
-        <span>Te dedico estas líneas</span>
-        <span>pintadas con arcoíris y amor,</span>
-        <span>porque eres tú mi inspiración,</span>
-        <span>mi musa, mi mejor color.</span>
+      <div class="poem-body" id="poema-cuerpo">
+        <span style="opacity:0.4;font-size:1rem;">Cargando poema del día... 🪶</span>
+      </div>
+      <div style="text-align:right; margin-top:14px;">
+        <span id="poema-firma" style="font-family:'Dancing Script',cursive;font-size:1.1rem;color:var(--ink-purple);font-weight:600;"></span>
       </div>
     </div>
   </section>
@@ -1178,6 +1168,59 @@
   const STORAGE_CFG  = "vac_config";
   // ══════════════════════════════════════════════════════════
 
+  // ── CARGAR POEMA DEL DÍA desde poema.json ──────────────────
+  async function cargarPoema() {
+    try {
+      const resp = await fetch("poema.json?t=" + Date.now());
+      if (!resp.ok) throw new Error();
+      const data = await resp.json();
+
+      // Título
+      if (data.titulo) {
+        document.getElementById("poema-titulo").textContent = data.titulo;
+      }
+
+      // Firma
+      if (data.firma) {
+        document.getElementById("poema-firma").textContent = data.firma;
+      }
+
+      // Versos — cada línea se convierte en un <span> animado
+      const cuerpo = document.getElementById("poema-cuerpo");
+      cuerpo.innerHTML = "";
+      const versos = data.versos || [];
+      versos.forEach((linea, i) => {
+        const span = document.createElement("span");
+        span.textContent = linea === "" ? "\u00a0" : linea; // línea vacía = espacio
+        span.style.animationDelay = (0.2 + i * 0.3) + "s";
+        cuerpo.appendChild(span);
+      });
+
+    } catch(e) {
+      // Si no encuentra el archivo, muestra el poema por defecto
+      const cuerpo = document.getElementById("poema-cuerpo");
+      cuerpo.innerHTML = "";
+      const def = [
+        "Mi lugar favorito,",
+        "mi comunicación espacio,",
+        "mi chica favorita,",
+        "mi lugar de escritura.",
+        "",
+        "Aquí cada verso nace",
+        "de lo más hondo del corazón,",
+        "donde el color y la palabra",
+        "se convierten en canción."
+      ];
+      def.forEach((linea, i) => {
+        const span = document.createElement("span");
+        span.textContent = linea === "" ? "\u00a0" : linea;
+        span.style.animationDelay = (0.2 + i * 0.3) + "s";
+        cuerpo.appendChild(span);
+      });
+      document.getElementById("poema-firma").textContent = "— Versos a Color 🌈";
+    }
+  }
+
   let imagenes      = [];   // [{src, nombre}]
   let indiceActual  = 0;
   let timer         = null;
@@ -1385,6 +1428,7 @@
   });
 
   // ── INICIO ──────────────────────────────────────────────────
+  cargarPoema();
   cargarImagenes();
 </script>
 
